@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Overpass tile selection</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <style>
+      body {
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        padding: 0;
+        margin: 0;
+      }
+      html, body, #map {
+        height: 100%;
+        width: 100%;
+      }
+      .custom-control {
+        background-color: #fff;
+        padding: 10px;
+        text-align: center;
+        border-radius: 4px;
+      }
+      #loading {
+        z-index: 5;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 50px;
+        width: 50%;
+        opacity: 0.9;
+        padding-bottom: 25px;
+      }
+      #loading > table {
+        text-align: left;
+        margin: 0 auto;
+        color: #ddd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="loading" class="custom-control">
+      <table>
+        <tr id="i1">
+          <td>1. Load map</td>
+        </tr>
+        <tr id="i2">
+          <td>2. Find user's location</td>
+        </tr>
+        <tr id="i3">
+          <td>3. Select appropriate basemap</td>
+        </tr>
+      </table>
+    </div>
+    <div id="map"></div>
+  </body>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="zepto.min.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+      var map = new L.map("map").setView([38.5, -105], 6);
+
+      var streets = 'http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png',
+          terrain = 'https://{s}.tiles.mapbox.com/v3/jczaplewski.j751k57j/{z}/{x}/{y}.png';
+
+      var currentTiles = L.tileLayer(terrain, {
+        maxZoom: 15,
+        attribution: ' Data from OSM'
+      }).addTo(map);
+
+      // Bootleg updating of loading indicator
+      $("#i1").css("color", "#222");
+
+      // When we find the user's location...
+      map.on("locationfound", function(result) {
+        // Set the map to that location
+        map.setView(result.latlng, 15);
+
+        // Update loading indicator
+        $("#i2").css("color", "#222");
+
+        // Wait for the map to set the location, and then...
+        setTimeout(function() {
+          // Figure out what kind of tiles we should use
+          countRoads();
+        }, 1000);
+      });
+
+      // Find the user's location
+      map.locate();
+
+      var instructions = L.control({position: "topright"});
+      instructions.onAdd = function() {
+        var container = L.DomUtil.create("div", "custom-control");
+        container.innerHTML = "Click here to update basemap selection <br><p id='roads'></p>";
+        return container;
+      }
+      instructions.addTo(map);
+
+      $(".custom-control").click(function() {
+        map.setZoom(15);
+        setTimeout(function(){
+          countRoads();
+        }, 500);
+      });
+
+      function countRoads() {
+        var bounds = map.getBounds();
+
+        $.getJSON("http://overpass.osm.rambler.ru/cgi/interpreter?data=[out:json];way[%22highway%22~%22primary|motorway|secondary|tertiary|residential%22](" + bounds._southWest.lat + "," + bounds._southWest.lng + "," + bounds._northEast.lat + "," + bounds._northEast.lng + ");out%20ids;", function(result) {
+
+          $("#roads").html(result.elements.length + " roads in view");
+
+          if (map.hasLayer(currentTiles)) {
+            map.removeLayer(currentTiles);
+          }
+
+          currentTiles = L.tileLayer((result.elements.length < 40) ? terrain : streets).addTo(map);
+          $("#i3").css("color", "#222");
+
+          setTimeout(function() {
+            $("#loading").css("display", "none");
+          }, 1500);
+
+        });
+      }
+    })();
+
+  </script>
+</html>
