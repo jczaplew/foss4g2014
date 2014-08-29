@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Search extent</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <style>
+      body {
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        padding: 0;
+        margin: 0;
+      }
+      html, body, #map {
+        height: 100%;
+        width: 100%;
+      }
+      .custom-control {
+        background-color: #fff;
+        padding: 10px;
+        text-align: center;
+        border-radius: 4px;
+      }
+      #search {
+        min-width: 200px;
+        border-radius: 6px;
+        border: 1px solid #aaa;
+        padding: 12px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+  </body>
+  
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="../shared/zepto.min.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+      var map = new L.map("map").setView([38.5, -105], 6);
+
+      var currentTiles = L.tileLayer('http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png', {
+        maxZoom: 15,
+        attribution: ' Via GeoIQ'
+      }).addTo(map);
+
+      var origin, marker, line;
+
+      $.getJSON("http://freegeoip.net/json/", function(data) {
+        origin = new L.latLng(data.latitude, data.longitude);
+      });
+
+      var instructions = L.control({position: "topright"});
+      instructions.onAdd = function() {
+        var container = L.DomUtil.create("div", "custom-control");
+        container.innerHTML = "<form id='searchForm'><input type='text' id='search' placeholder='Search for a place'/></form>";
+        return container;
+      }
+      instructions.addTo(map);
+
+      $("#searchForm").submit(function(e) {
+        if (map.hasLayer(marker)) {
+          map.removeLayer(marker);
+        }
+        if (map.hasLayer(line)) {
+          map.removeLayer(line);
+        }
+        e.preventDefault();
+        var searchTerm = $("#search").val();
+        $.getJSON("http://open.mapquestapi.com/nominatim/v1/search.php?format=json&q=" + searchTerm, function(data) {
+          var destination = new L.latLng(data[0].lat, data[0].lon);
+
+          line = L.polyline([origin, destination], {opacity: 0}).addTo(map);
+          marker = new L.marker(destination).addTo(map);
+
+          map.fitBounds(line.getBounds().pad(0.1));
+        });
+      });
+
+    })();
+
+  </script>
+</html>
