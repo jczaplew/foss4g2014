@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Adaptive Map Experiences - FOSS4G 2014</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="css/stack.v0.css" rel="stylesheet" type="text/css">
+    <style>
+
+    section {
+      background-image: url("images/background2.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      color: #fff;
+      padding: 2em;
+      font-family: 'Open Sans', sans-serif;
+      text-align: center;
+      padding-top: 3em;
+    }
+
+    a:link,
+    a:visited {
+      color: orange;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      height: 100%;
+    }
+
+    .left {
+      text-align: left;
+    }
+
+    .image {
+      background: #000;
+      padding: 0;
+    }
+
+    .image-holder {
+      height: 100%;
+      width: 100%;
+      text-align: center;
+    }
+
+    .image-holder > p {
+      margin-top:-65px;
+    }
+
+    .image-white {
+      background-color: #fff;
+    }
+
+    .big {
+      line-height: 1.5em;
+      font-size: 70px;
+    }
+
+    .overpass {
+      height: 60%;
+      margin-top: 11%;
+    }
+
+    .acmp {
+      height: 80%;
+      margin-top: 5%;
+    }
+
+    .hillshade {
+      height:80%;
+      margin-top: 5%;
+    }
+    </style>
+  </head>
+  <body>
+    <section>
+      <section-content>
+        <h1 class="big">Responsive Interactivity: <br>Toward User-centered Adaptive Map Experiences</h1>
+        <div class="left">
+          <p>John J Czaplewski - University of Wisconsin Geoscience Dept. <br>
+             Rashauna Mead - Applied Population Lab, University of Wisconsin <br>
+             Richard Donohue - University of Kentucky
+          </p>
+        </div>
+      </section-content>
+    </section>
+
+    <section>
+      <section-content>
+        <h1>Adaptive Maps!</h1>
+      </section-content>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/adaptive_responsive.jpg" class="slide-image">
+        <p><a href="http://bradfrostweb.com/wp-content/uploads/2013/10/adaptive.jpg">http://bradfrostweb.com/wp-content/uploads/2013/10/adaptive.jpg</a></p>
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/lufthansa_desktop.png" class="slide-image">
+        <p><a href="http://lufthansa.com">http://lufthansa.com</a></p>
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/lufthansa_mobile.png" class="slide-image">
+        <p><a href="http://lufthansa.com">http://lufthansa.com</a></p>
+      </div>
+    </section>
+
+    <section>
+      <section-content>
+        <h1>.fitBounds() slide</h1>
+      </section-content>
+    </section>
+
+    <section class="image image-white">
+      <div class="image-holder">
+        <img src="images/overpass.png" class="slide-image overpass">
+        <p><a href="http://www.overpass-api.de">http://www.overpass-api.de</a></p>
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/overpass_urban.png" class="slide-image">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/overpass_rural.png" class="slide-image">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/driving1.png" class="slide-image">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/driving2.png" class="slide-image">
+      </div>
+    </section>
+
+    <section>
+      <section-content>
+        <h1 class="big">Adaptive Composite Map Projection</h1>
+        <p><a href="http://cartography.oregonstate.edu/ScaleAdaptiveWebMapProjections.html">http://cartography.oregonstate.edu/ScaleAdaptiveWebMapProjections.html</a></p>
+      </section-content>
+    </section>
+
+    <section class="image image-white">
+      <div class="image-holder">
+        <img src="images/acmp1.png" class="slide-image acmp">
+      </div>
+    </section>
+
+    <section class="image image-white">
+      <div class="image-holder">
+        <img src="images/acmp2.png" class="slide-image acmp">
+      </div>
+    </section>
+
+    <section class="image image-white">
+      <div class="image-holder">
+        <img src="images/acmp3.png" class="slide-image acmp">
+      </div>
+    </section>
+
+    <section class="image image-white">
+      <div class="image-holder">
+        <img src="images/acmp4.png" class="slide-image acmp">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/g_maps1.png" class="slide-image">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/g_maps2.png" class="slide-image">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/g_maps3.png" class="slide-image">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/hillshade.gif" class="slide-image hillshade">
+      </div>
+    </section>
+
+    <section>
+      <section-content>
+        <h1 class="big">"What if the map on your iPhone was responsive, changing the shadows based on the time of day?"</h1>
+        <p><a href="https://www.mapbox.com/blog/dynamic-hill-shading/">mapbox.com/blog/dynamic-hill-shading/</a></p>
+      </section-content>
+    </section>
+
+    <section class="image image-white">
+      <div class="image-holder">
+        <img src="images/apple.png" class="slide-image overpass">
+        <p><a href="https://developer.apple.com/library/ios/documentation/userexperience/conceptual/mobilehig/LayoutandAppearance.html">Apple UX guidelines</a></p>
+      </div>
+    </section>
+
+    <section class="image image-white">
+      <div class="image-holder">
+        <img src="images/pbdb1.png" class="slide-image hillshade">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/pbdb2.png" class="slide-image hillshade">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/pbdb3.png" class="slide-image hillshade">
+      </div>
+    </section>
+
+    <section class="image">
+      <div class="image-holder">
+        <img src="images/pbdb4.png" class="slide-image hillshade">
+      </div>
+    </section>
+
+    <section class="image image-white">
+      <div class="image-holder">
+        <img src="images/bf_adaptive.png" class="slide-image overpass">
+        <p><a href="hhttp://codepen.io/bradfrost/full/tLxAs">http://codepen.io/bradfrost/full/tLxAs</a></p>
+      </div>
+    </section>
+
+    <section>
+      <section-content>
+        <h1>Thanks!</h1>
+        <div class="left">
+          <p>Slides - <a href="">johnjcz.com/presentations/foss4g2014</a> <br>
+             Code/examples - <a href="https://github.com/jczaplew/foss4g2014">github.com/jczaplew/foss4g2014</a>
+          </p>
+        </div>
+      </section-content>
+    </section>
+
+    <section style="padding:5em 13em;">
+      <p>Stack is made by <a href="http://bost.ocks.org/mike/" rel="author">Mike Bostock</a>
+        <br>and is available on <a href="https://github.com/mbostock/stack">GitHub</a>
+        <br>under the <a href="https://github.com/mbostock/stack/blob/gh-pages/LICENSE">BSD license</a>.
+      <p class="grey">View source to get started.
+    </section>
+
+    <script src="js/d3.v3.min.js"></script>
+    <script src="js/stack.v1.min.js"></script>
+    <script type="text/javascript">
+      stack();
+    </script>
+  </body>
+</html>
