@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Zoom-dependent Map Symbology Scaling</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<link href='normalize.css' rel='stylesheet' />
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.css' rel='stylesheet' />
+<style>
+	@import url(http://fonts.googleapis.com/css?family=Raleway);
+	body {
+		font-family: Raleway, sans-serif;
+		margin:0;
+		padding:0;
+	}
+	header {
+		position: absolute;
+		height: 40px;
+		background:rgba(255, 255, 255, 0.8);
+		right: -5px;
+		border-radius: 5px;
+		padding: 0 15px;
+
+	}
+	h1 {
+		font-size: 1.1em;
+	}
+	h3{
+		display: inline-block;
+		margin: 0 15px 0 0;
+		font-size: 1em;
+	}
+	hr {
+		opacity: .3;
+	}
+	#map {
+		position:absolute;
+		top:0;
+		bottom:0;
+		width:100%;
+	}
+
+	#zoomSizeControl {
+		position:absolute;
+		padding: 5px 15px;
+		left:15px;
+		bottom:15px;
+		width:260px;
+		overflow:auto;
+		border-radius: 5px;
+		background:rgba(255, 255, 255, 0.8);
+	}
+	label {
+
+	}
+	input {
+		float: right;
+		margin-top: 5px;
+		width: 130px;
+	}
+	output {
+		width: 65px;
+		display: inline-block;
+		margin: 0 10px 15px 25px;
+		padding: 3px 6px;
+		text-align: right;
+	}
+</style>
+</head>
+
+
+<body>
+
+<div id='map'></div>
+<div id="zoomSizeControl">
+	<h3>zoom<br> level</h3>
+	<h3>scale<br> factor</h3>
+	<hr>
+	<label>2:<output id="output-n2"></output></label>
+	<input id="range-n2" type="range">
+	<label>3:<output id="output-n3"></output></label>
+	<input id="range-n3" type="range">
+	<label>4:<output id="output-n4"></output></label>
+	<input id="range-n4" type="range">
+	<label>5:<output id="output-n5"></output></label>
+	<input id="range-n5" type="range">
+	<label>6:<output id="output-n6"></output></label>
+	<input id="range-n6" type="range">
+</div>
+<header>
+<h1>Zoom-dependent Map Symbology Scaling</h1>
+</header>
+
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js'></script>
+<script src="../shared/zepto.min.js"></script>
+
+<script>
+
+
+	L.mapbox.accessToken = 'pk.eyJ1Ijoicmdkb25vaHVlIiwiYSI6Im5Ua3F4UzgifQ.PClcVzU5OUj17kuxqsY_Dg';
+	var symbols,
+		map = L.mapbox.map('map', 'examples.map-20v6611k', { // create a new map
+			minZoom: 2,	// constrain the zoom levels
+			maxZoom: 6
+		}).setView([30, -15], 2); // set initial
+
+	var zoomScaleSizes = { // default scale factors
+		n2 : 26000,
+		n3 : 18000,
+		n4 : 9000,
+		n5 : 4000,
+		n6 : 2000
+	}
+	var max = 50000,
+		min = 500,
+		step = 500;
+
+
+	for (var n = 2; n <= 6; n++) {
+	    $("#range-n"+n)
+	    	.attr({'max': max, 'min':min, 'step': step,'value': String(zoomScaleSizes['n'+n])});
+
+	    (function() {
+
+	     	$("#range-n"+n).on('input change', function() {
+	     		var targetZoomLevel = this.id.slice(-2, this.id.length);
+
+				$("#output-n"+this.id.slice(-1, this.id.length)).text(this.value);
+
+				zoomScaleSizes[targetZoomLevel] = Number(this.value);
+
+				updateSymbolRadii();
+
+	     	});
+	    }())
+
+	    $("#output-n"+n).text(zoomScaleSizes['n'+n]);
+	}
+
+	$.getJSON('pop-places.json', function(data) { // load the GeoJSON data
+
+		drawSymbols(data); // pass loaded external resource data
+
+	});
+
+	function drawSymbols(data) {
+
+		var sf = getZoomScale(zoomScaleSizes); // get the initial scale factor based off the initial zoom level
+
+		symbols = L.geoJson(data, {
+
+			pointToLayer: function(feature, latlng) {
+
+				// use the population attribute to calculate the radius of the circle
+				return L.circle(latlng, calcPropRadius(feature.properties.pop_max, sf), {
+
+				    fillColor: "#708598",
+				    color: '#537898',
+				    weight: 1,
+				    fillOpacity: 0.8
+
+				})
+			}
+		}).addTo(map);
+
+	} // end drawSymbols
+
+	function calcPropRadius(pop, sf) {
+
+		var area = pop * sf;
+
+		return Math.sqrt(area/Math.PI)*2;
+
+	} // end calcPropRadius
+
+
+
+	function getZoomScale(S) {
+
+		var s;
+		console.log(S);
+
+		switch (map.getZoom()) {
+			case 2:
+				s = S.n2;
+				break;
+			case 3:
+				s = S.n3;
+				break;
+			case 4:
+				s = S.n4;
+				break;
+			case 5:
+				s = S.n5;
+				break;
+			case 6:
+				s = S.n6;
+				break;
+		}
+
+		return s;
+
+	}
+	map.on('zoomend', function(e) {
+
+
+		updateSymbolRadii()
+
+
+	});
+	function updateSymbolRadii(){
+
+		var sf = getZoomScale(zoomScaleSizes);
+
+		symbols.eachLayer(function (layer) {
+
+			layer.setRadius(calcPropRadius(layer.feature.properties.pop_max, sf));
+
+		});
+
+	}
+
+
+
+</script>
+</body>
+</html>
