@@ -35,6 +35,10 @@
       margin-top: 2.5%;
     }
 
+    t {
+      color: #14D9FF;
+    }
+
     .left {
       text-align: left;
     }
@@ -63,6 +67,10 @@
       font-size: 70px;
     }
 
+    .xbig {
+      font-size: 95px;
+    }
+
     .overpass {
       height: 60%;
       margin-top: 11%;
@@ -84,9 +92,9 @@
       <section-content>
         <h1 class="big">Responsive Interactivity: <br>Toward User-centered Adaptive Map Experiences</h1>
         <div class="left">
-          <p>John J Czaplewski - University of Wisconsin Geoscience Dept. <br>
-             Rashauna Mead - Applied Population Lab, University of Wisconsin <br>
-             Richard Donohue - University of Kentucky
+          <p>John J Czaplewski - <t>University of Wisconsin Geoscience Dept.</t> <br>
+             Rashauna Mead - <t>Applied Population Lab, University of Wisconsin</t> <br>
+             Richard Donohue - <t>University of Kentucky</t>
           </p>
         </div>
       </section-content>
@@ -94,7 +102,7 @@
 
     <section>
       <section-content>
-        <h1>Adaptive Maps!</h1>
+        <h1 class="xbig">Adaptive Maps!</h1>
       </section-content>
     </section>
 
@@ -121,7 +129,7 @@
 
     <section>
       <section-content>
-        <h1>.fitBounds() slide</h1>
+        <h1 class="xbig">Using user location</h1>
       </section-content>
     </section>
 
@@ -154,6 +162,12 @@
       <div class="image-holder">
         <img src="images/driving2.png" class="slide-image">
       </div>
+    </section>
+
+    <section>
+      <section-content>
+        <h1 class="xbig">Adaptive Representation</h1>
+      </section-content>
     </section>
 
     <section>
@@ -208,6 +222,7 @@
     <section class="image">
       <div class="image-holder">
         <img src="images/hillshade.gif" class="slide-image hillshade">
+        <p><a href="https://www.mapbox.com/blog/dynamic-hill-shading/">mapbox.com/blog/dynamic-hill-shading/</a></p>
       </div>
     </section>
 
@@ -225,28 +240,44 @@
       </div>
     </section>
 
+    <section>
+      <section-content>
+        <h1 class="xbig">Adaptive Server Side</h1>
+      </section-content>
+    </section>
+
     <section class="image image-white">
       <div class="image-holder">
         <img src="images/pbdb1.png" class="slide-image hillshade">
+        <p><a href="http://paleobiodb.org/navigator">paleobiodb.org/navigator</a></p>
       </div>
     </section>
 
     <section class="image">
       <div class="image-holder">
         <img src="images/pbdb2.png" class="slide-image hillshade">
+        <p><a href="http://paleobiodb.org/navigator">paleobiodb.org/navigator</a></p>
       </div>
     </section>
 
     <section class="image">
       <div class="image-holder">
         <img src="images/pbdb3.png" class="slide-image hillshade">
+        <p><a href="http://paleobiodb.org/navigator">paleobiodb.org/navigator</a></p>
       </div>
     </section>
 
     <section class="image">
       <div class="image-holder">
         <img src="images/pbdb4.png" class="slide-image hillshade">
+        <p><a href="http://paleobiodb.org/navigator">paleobiodb.org/navigator</a></p>
       </div>
+    </section>
+
+    <section>
+      <section-content>
+        <h1 class="xbig">Other Adaptive</h1>
+      </section-content>
     </section>
 
     <section class="image image-white">
@@ -258,21 +289,51 @@
 
     <section>
       <section-content>
-        <h1>Thanks!</h1>
+        <h1 class="xbig">(Placeholder for Rashauna's example)</h1>
+      </section-content>
+    </section>
+
+    <section>
+      <section-content>
+        <h1 class="xbig">Where do we go?</h1>
+      </section-content>
+    </section>
+
+    <section>
+      <section-content>
+        <h1 class="xbig">Reusable libraries?</h1>
+      </section-content>
+    </section>
+
+    <section>
+      <section-content>
+        <h1 class="big">Stick with device/screen specific applications?</h1>
+      </section-content>
+    </section>
+
+
+    <section>
+      <section-content>
+        <h1 class="xbig">Thanks!</h1>
         <div class="left">
           <p>Slides - <a href="">johnjcz.com/presentations/foss4g2014</a> <br>
              Code/examples - <a href="https://github.com/jczaplew/foss4g2014">github.com/jczaplew/foss4g2014</a>
+          </p>
+          <p>
+            <a href="https://twitter.com/johnjcz"><t>@johnjcz</t></a><br>
+            <a href="https://twitter.com/RashaunaMead"><t>@RashaunaMead</t></a><br>
+            <a href="https://twitter.com/rgdonohue"><t>@rgdonohue</t></a>
           </p>
         </div>
       </section-content>
     </section>
 
-    <section style="padding:5em 13em;">
+  <!--  <section style="padding:5em 13em;">
       <p>Stack is made by <a href="http://bost.ocks.org/mike/" rel="author">Mike Bostock</a>
         <br>and is available on <a href="https://github.com/mbostock/stack">GitHub</a>
         <br>under the <a href="https://github.com/mbostock/stack/blob/gh-pages/LICENSE">BSD license</a>.
       <p class="grey">View source to get started.
-    </section>
+    </section>-->
 
     <script src="js/d3.v3.min.js"></script>
     <script src="js/stack.v1.min.js"></script>
