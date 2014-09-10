@@ -159,7 +159,7 @@
 				    weight: 1,
 				    fillOpacity: 0.8
 
-				})
+				});
 			}
 		}).addTo(map);
 
@@ -201,13 +201,13 @@
 		return s;
 
 	}
-	map.on('zoomend', function(e) {
 
+	map.on('zoomend', function(e) {
 
 		updateSymbolRadii()
 
-
 	});
+
 	function updateSymbolRadii(){
 
 		var sf = getZoomScale(zoomScaleSizes);
